@@ -79,9 +79,6 @@ function renderResult(){
   }).join("");
   $("rHook").textContent = L(ty.hook);
   $("rDay").innerHTML = esc(t("readday", { d: ty.day, title: L(DAYS[ty.day]) })) + ' <a href="https://x.com/faithzhukgr7" target="_blank" rel="noopener">X @faithzhukgr7</a> / <a href="https://www.instagram.com/faiitttthhh/" target="_blank" rel="noopener">IG @faiitttthhh</a>';
-  $("allTypes").innerHTML = Q.types.map(function(x){
-    return '<div class="tchip' + (x.id === ty.id ? ' me' : '') + '"><b>' + esc(L(x.name)) + '</b><small>' + esc(L(x.title)) + ' · ' + esc(t("sideShort")[x.side]) + '</small></div>';
-  }).join("");
   if (twin) renderTwin();
 }
 
