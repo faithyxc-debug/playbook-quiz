@@ -6,11 +6,27 @@ var Q = window.QUIZ, IMG = window.CAT_IMG;
 var I = window.I18N, UI = I.UI, DAYS = I.DAYS, FB = I.fallback;
 // Only languages that have a UI block are offered.
 var LANGS = I.LANGS.filter(function(x){ return UI[x.code]; });
+// Merge generated translation packs (i18n.js CONTENT.<code>) into the quiz data, so every lookup stays pick(o, lang).
+(function mergeContent(C){
+  if (!C) return;
+  Object.keys(C).forEach(function(c){
+    var P = C[c];
+    Object.keys(P.days || {}).forEach(function(d){ if (DAYS[d]) DAYS[d][c] = P.days[d]; });
+    Object.keys(P.traits || {}).forEach(function(k){ if (Q.traits[k]) Q.traits[k][c] = P.traits[k]; });
+    Object.keys(P.sides || {}).forEach(function(k){ if (Q.sides[k]) Q.sides[k][c] = P.sides[k]; });
+    (P.q || []).forEach(function(x, i){ var q = Q.questions[i]; if (!q) return; q[c] = x.q; if (q.lead) q.lead[c] = x.lead; x.a.forEach(function(o, j){ if (q.a[j]) q.a[j][c] = o; }); });
+    Q.types.forEach(function(ty){ var y = P.types && P.types[ty.id]; if (!y) return; ["fig","name","title","desc","hook"].forEach(function(f){ if (y[f] != null) ty[f][c] = y[f]; }); });
+    Object.keys(P.stars || {}).forEach(function(k){ if (Q.stars[k]) Q.stars[k][c] = P.stars[k]; });
+    (P.hours || []).forEach(function(h, i){ if (Q.hours[i]) Q.hours[i][c] = h; });
+  });
+})(I.CONTENT);
 function langCfg(c){ return LANGS.filter(function(x){ return x.code === (c || lang); })[0] || LANGS[0]; }
 function isLang(c){ return LANGS.some(function(x){ return x.code === c; }); }
 var lang = FB, idx = 0, answers = [], result = null, twin = null;
 try { var sv = localStorage.getItem("ep_lang"); if (sv && isLang(sv)) lang = sv; } catch(e){}
 var qp = /[?&]lang=([a-z]{2})/.exec(location.search); if (qp && isLang(qp[1])) lang = qp[1];
+// First visit (nothing saved, no ?lang=): follow the browser language if we have it.
+else if (!sv) { try { var nl = (navigator.languages && navigator.languages[0]) || navigator.language || ""; nl = nl.slice(0,2).toLowerCase(); if (isLang(nl)) lang = nl; } catch(e){} }
 
 function $(id){ return document.getElementById(id); }
 function t(k, vars, lg){ var u = UI[lg || lang], s = (u && u[k] != null) ? u[k] : UI[FB][k]; if (vars) for (var v in vars) s = s.split("{"+v+"}").join(vars[v]); return s; }
@@ -24,6 +40,7 @@ function show(id){ ["intro","quiz","result"].forEach(function(s){ $(s).classList
 
 function applyLang(){
   document.documentElement.lang = langCfg().html;
+  $("heroImg").alt = t("heroAlt");
   $("langSel").value = lang; $("langSel").setAttribute("aria-label", t("langLabel"));
   document.querySelectorAll("[data-i18n]").forEach(function(el){ el.textContent = t(el.getAttribute("data-i18n")); });
   document.title = t("docTitle");
@@ -92,22 +109,30 @@ function wrapTokens(s){
   return wrapTokensBasic(s);
 }
 function wrapTokensBasic(s){ return s.match(/[\u2E80-\u9FFF\uF900-\uFAFF\uFF00-\uFFEF\u3000-\u303F「」]|[^\s\u2E80-\u9FFF\uF900-\uFAFF\uFF00-\uFFEF\u3000-\u303F「」]+|\s+/g) || []; }
+var NOSTART = /^[。、，．！？：；」』）】〉》”’…ー・,.!?:;)\]»%]/, NOEND = /[「『（【〈《“‘(«¿¡]+$/;
 function wrap(ctx, text, maxW){
   var toks = wrapTokens(text), lines = [], cur = "";
   toks.forEach(function(tk){
     var test = cur + tk;
-    if (ctx.measureText(test).width > maxW && cur.trim()) { lines.push(cur.trim()); cur = /^\s+$/.test(tk) ? "" : tk; }
+    if (ctx.measureText(test).width > maxW && cur.trim()) {
+      // kinsoku: closing punctuation never starts a line (hang it), opening brackets never end one (carry them over)
+      if (NOSTART.test(tk)) { cur = test; return; }
+      var carry = ""; var m = NOEND.exec(cur); if (m && m.index > 0) { carry = m[0]; cur = cur.slice(0, m.index); }
+      lines.push(cur.trim()); cur = /^\s+$/.test(tk) ? carry : carry + tk; }
     else cur = test;
   });
   if (cur.trim()) lines.push(cur.trim());
   return lines;
 }
-var FONT = '"PingFang SC","Hiragino Sans GB","Noto Sans CJK SC","Microsoft YaHei","Hiragino Kaku Gothic ProN","Apple SD Gothic Neo","Noto Sans CJK KR","Noto Sans Thai","Thonburi",-apple-system,"Segoe UI",Roboto,sans-serif';
+var FONT_BASE = '"PingFang SC","Hiragino Sans GB","Noto Sans CJK SC","Microsoft YaHei","Hiragino Kaku Gothic ProN","Apple SD Gothic Neo","Noto Sans CJK KR","Noto Sans Thai","Thonburi",-apple-system,"Segoe UI",Roboto,sans-serif';
+var FONT = FONT_BASE;
+function setCardFont(){ var f = langCfg().font; FONT = f ? f + "," + FONT_BASE : FONT_BASE; }
 function fitFont(ctx, text, weight, start, min, maxW){ var s = start; do { ctx.font = weight + " " + s + "px " + FONT; if (ctx.measureText(text).width <= maxW) break; s -= 2; } while (s > min); return s; }
 function rr(ctx, x, y, w, h, r){ ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
 function loadImg(src){ return new Promise(function(res, rej){ var im = new Image(); im.onload = function(){ res(im); }; im.onerror = rej; im.src = src; }); }
 
 function drawCard(){
+  setCardFont();
   var ty = result.type, c = $("card"), ctx = c.getContext("2d"), W = 1080, H = 1350;
   return loadImg(IMG[ty.img]).then(function(im){
     ctx.fillStyle = "#f6eddf"; ctx.fillRect(0,0,W,H);
@@ -130,12 +155,13 @@ function drawCard(){
     ctx.fillStyle = "rgba(168,56,42,.92)"; rr(ctx, ix+20, iy+ih-66, pw, 48, 24); ctx.fill();
     ctx.fillStyle = "#fff"; ctx.textAlign = "left"; ctx.fillText(pill, ix+40, iy+ih-32);
     ctx.font = "500 20px " + FONT; ctx.fillStyle = "rgba(255,255,255,.95)"; ctx.textAlign = "right";
-    ctx.fillText("AI illustration · AI插画", ix+iw-18, iy+ih-18);
+    ctx.fillText(t("aiIll") + " · " + t("aiIll", null, altCode()), ix+iw-18, iy+ih-18);
     // bars
     var by = 856; ctx.textAlign = "left";
+    var traitFs = 30;
     ["S","L","R","P"].forEach(function(k, i){
       var tr = Q.traits[k], y = by + i*58, v = result.pct[k];
-      ctx.fillStyle = "#2b2320"; ctx.font = "700 30px " + FONT; ctx.fillText(L(tr), 100, y+10);
+      ctx.fillStyle = "#2b2320"; traitFs = Math.min(traitFs, fitFont(ctx, L(tr), "700", 30, 22, 370-100-16)); ctx.fillText(L(tr), 100, y+10);
       ctx.fillStyle = "#e9dcc9"; rr(ctx, 370, y-12, 520, 26, 13); ctx.fill();
       ctx.fillStyle = tr.color; rr(ctx, 370, y-12, Math.max(26, 520*v/100), 26, 13); ctx.fill();
       ctx.fillStyle = "#2b2320"; ctx.textAlign = "right"; ctx.fillText(v + "%", 985, y+10); ctx.textAlign = "left";
@@ -148,7 +174,7 @@ function drawCard(){
     first = first.trim();
     ctx.font = "500 31px " + FONT; ctx.fillStyle = "#4a3f38"; ctx.textAlign = "center";
     var allLines = wrap(ctx, first, W-200), lines = allLines.slice(0, twin ? 2 : 3);
-    window.__cardStats = { descLines: allLines.length, maxLines: twin ? 2 : 3, nameFs: fs, subFs: fs2, subW: (ctx.font = "700 " + fs2 + "px " + FONT, ctx.measureText(sub).width), nameW: (ctx.font = "800 " + fs + "px " + FONT, ctx.measureText(name).width), maxW: W-160 };
+    window.__cardStats = { traitFs: traitFs, descLines: allLines.length, maxLines: twin ? 2 : 3, nameFs: fs, subFs: fs2, subW: (ctx.font = "700 " + fs2 + "px " + FONT, ctx.measureText(sub).width), nameW: (ctx.font = "800 " + fs + "px " + FONT, ctx.measureText(name).width), maxW: W-160 };
     ctx.font = "500 31px " + FONT;
     lines.forEach(function(l, i){ ctx.fillText(l, W/2, 1118 + i*40); });
     var fy = 1118 + lines.length*40;
@@ -233,7 +259,7 @@ function renderShared(){
   box.innerHTML = '<p class="fine">' + esc(t("sharedHead")) + '</p><b>' + esc(L(sh.type.name)) + '</b> · ' + esc(L(sh.type.title)) + '<p class="fine">' + esc(t("sharedCta")) + '</p>';
 }
 
-$("heroImg").src = IMG.duo; $("heroImg").alt = "Manman and Wuyue";
+$("heroImg").src = IMG.duo;
 applyLang();
 // test hook for automated checks
 window.__quiz = { setLang: setLang, langs: function(){ return LANGS.map(function(x){ return x.code; }); }, answer: function(arr){ answers = arr.slice(); finish(); }, get result(){ return result; }, drawCard: drawCard, get twin(){ return twin; } };
