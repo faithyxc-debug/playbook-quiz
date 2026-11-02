@@ -21,19 +21,19 @@ questions: [
    { en: "Mute: “No court on weekends.” Then peek every ten minutes.", zh: "免打扰：“周末不上朝。”然后每十分钟偷看", t: ["R","S","r"] },
    { en: "Want to reply, scared of getting work. Lurk.", zh: "想回又怕被派活，潜水看谁先冒头", t: ["P","L","m"] } ] },
  { en: "Someone drank your bubble tea from the office fridge. Third time.", zh: "冰箱里你的奶茶，第三次被偷喝了。",
-   lead: { en: "Lords went to war over land. You're going to war over bubble tea.", zh: "诸侯为封地开战。你为一杯奶茶，也要开战了。" }, a: [
+   lead: { en: "Lords went to war over land. You're going to war over bubble tea.", zh: "诸侯为土地开战。你为一杯奶茶，也要开战了。" }, a: [
    { en: "Want to explode, don't want to look petty. Plant a decoy tea.", zh: "想发火又怕显小气，放杯“诱饵奶茶”", t: ["S","P","r"] },
    { en: "“No big deal.” Quietly order two next time.", zh: "嘴上“没事”，下次默默点两杯", t: ["L","S","m"] },
    { en: "Hate being the bad guy. Email the Fridge Act anyway.", zh: "不想当恶人，还是发了《冰箱法》", t: ["R","L","r"] },
    { en: "Only before payday? You soften. Buy them one.", zh: "发薪日前才被偷？心软了，请 TA 一杯", t: ["P","R","m"] } ] },
  { en: "Boss: “Work hard. When we IPO, you're a legend.”", zh: "老板：“好好干，上市了你就是元老。”",
-   lead: { en: "Ancient titles came with land. Your boss's promise doesn't even have a slide.", zh: "古代封侯好歹给块地。老板的饼，连 PPT 都没有。" }, a: [
+   lead: { en: "Han marquises at least got fief income. Your boss's promise doesn't even have a slide.", zh: "汉代封侯，好歹给食邑。老板的饼，连 PPT 都没有。" }, a: [
    { en: "Thank him sincerely. Update your résumé.", zh: "真诚道谢，回家更新简历", t: ["S","P","r"] },
    { en: "You know it's a pie in the sky. You eat it. What if.", zh: "明知是饼，还是吃了。万一呢", t: ["L","R","r"] },
    { en: "Heart at 180: “Can that go in my contract?”", zh: "心跳 180：“能写进合同吗？”", t: ["R","L","m"] },
    { en: "Same line as last year. You still nod.", zh: "去年也是这句。你还是点了头", t: ["P","S","m"] } ] },
  { en: "The 3 p.m. meeting hits 7 p.m. Still “aligning on granularity.”", zh: "3 点的会开到 7 点，还在“对齐颗粒度”。",
-   lead: { en: "One “Dismissed!” ended court. In your meeting, nobody dares.", zh: "皇帝一句“退朝”就散。你的会，没人敢说。" }, a: [
+   lead: { en: "In costume dramas, one “Dismissed!” ends court. In your meeting, nobody dares.", zh: "古装剧里，皇帝一句“退朝”就散。你的会，没人敢说。" }, a: [
    { en: "Four hours of holding it in: “Do we still need this meeting?”", zh: "憋了四小时，举手：“这会还开吗？”", t: ["R","P","m"] },
    { en: "Want to leave, don't dare. Finish your weekly report under the table.", zh: "想走不敢走，周报在桌下写完了", t: ["S","L","m"] },
    { en: "Wait for the boss to yawn before you dare say “Let's wrap.”", zh: "等领导打哈欠，才敢说“先到这”", t: ["P","S","r"] },
@@ -75,7 +75,7 @@ questions: [
    { en: "Not answering. Drop a big red envelope. Topic changed.", zh: "不想答，甩个大红包转移话题", t: ["S","P","r"] },
    { en: "Too embarrassed to say the number. “Doing fine.”", zh: "工资不好意思说，回“还行”", t: ["L","R","m"] } ] },
  { en: "The office moved to the suburbs. Two hours each way.", zh: "公司搬到郊区，单程通勤两小时。",
-   lead: { en: "Su Shi was exiled three times in his whole life. You get exiled twice a day.", zh: "苏轼一辈子被贬了三回，最远到海南。你每天往返四小时，一天就被贬两回。" }, a: [
+   lead: { en: "Su Shi was banished all the way to Hainan. You get banished twice a day.", zh: "苏轼一路被贬，最远到了海南。你每天往返四小时，一天就被贬两回。" }, a: [
    { en: "Want to quit, don't dare. Pitch a “remote pilot” first.", zh: "想辞又不敢，先提议“居家试点”", t: ["P","S","r"] },
    { en: "You hate the commute, but you'd miss your carpool work horses.", zh: "骂着通勤，却舍不得拼车的牛马搭子", t: ["L","P","m"] },
    { en: "Too scared to quit alone, so you start a petition for a shuttle bus.", zh: "不敢一个人辞，就带头联名要班车", t: ["R","L","r"] },
@@ -121,8 +121,8 @@ types: [
    title: { en: "The “Just Asking” Type", zh: "就问问不犯法型" },
    desc: { en: "You ask “who designed this process?” in the weekly meeting and enjoy the silence. Next quarter, again.",
            zh: "你最爱在周会上问“这流程谁定的”，然后欣赏全场沉默。下季度接着问。" },
-   hook: { en: "In 606 BC he paraded troops on Zhou's border and asked how heavy the royal cauldrons were; told 「在德不在鼎」 (it lies in virtue, not in the cauldrons), he let it go. (Zuozhuan, Duke Xuan 3) The “silent for three years” tale is likely later lore.",
-           zh: "前606年他陈兵周境，问九鼎的大小轻重；王孙满答「在德不在鼎」，他没有再逼。（《左传·宣公三年》）“三年不鸣”的故事多被视为后人附会。" } },
+   hook: { en: "In 606 BC he paraded troops on Zhou's border and asked the size and weight of the royal cauldrons; Wangsun Man answered 「在德不在鼎」: it lies in virtue, not in the cauldrons. (Zuozhuan, Duke Xuan 3) The “silent for three years” story comes from later texts (Han Feizi, Shiji); its reliability is debated.",
+           zh: "前606年他陈兵周境，问九鼎的大小轻重；王孙满答「在德不在鼎」。（《左传·宣公三年》）“三年不鸣”的故事见于《韩非子》《史记》等较晚文献，可靠性有争议。" } },
  { id: "zipi", side: "r", pair: "LR", day: 8, img: "zipi",
    fig: { en: "Zipi of Zheng", zh: "子皮" }, name: { en: "The Zipi type", zh: "子皮型" },
    title: { en: "The Backer Who Takes No Credit", zh: "撑腰不抢功型" },
@@ -135,7 +135,7 @@ types: [
    title: { en: "The Wrong-Side Comeback Kid", zh: "站错队也能翻盘型" },
    desc: { en: "You started on the wrong side and became the one person the company can't lose. Not by shouting. By spreadsheet.",
            zh: "你从站错队开始，混成了全公司最离不开的人。靠的不是嗓门，是一张表。" },
-   hook: { en: "Confucius credited him: 「桓公九合諸侯，不以兵車，管仲之力也」: Duke Huan gathered the lords nine times, not with war chariots; that was Guan Zhong's doing. (Analects, Xian Wen)",
+   hook: { en: "Confucius credited him: 「桓公九合諸侯，不以兵車，管仲之力也」: Duke Huan repeatedly brought the lords together, not with war chariots; that was Guan Zhong's doing. (Analects, Xian Wen)",
            zh: "孔子评价：「桓公九合諸侯，不以兵車，管仲之力也。」（今译：桓公多次会合诸侯，不靠兵车武力，这是管仲的功劳。）（《论语·宪问》）" } },
  { id: "bao", side: "m", pair: "LP", day: 2, img: "bao",
    fig: { en: "Bao Shuya", zh: "鲍叔牙" }, name: { en: "The Bao Shuya type", zh: "鲍叔牙型" },
@@ -156,8 +156,8 @@ types: [
    title: { en: "The Jinx Who's Always Right", zh: "乌鸦嘴但每次都对型" },
    desc: { en: "You called the crash and got told you're bad for morale; three days later, everyone asks you what to do.",
            zh: "你说“这需求要翻车”，被嫌没有情绪价值；三天后，大家来问你怎么办。" },
-   hook: { en: "He warned Duke Mu against a long-distance raid, then wept as the army marched out: 「吾見師之出，而不見其入也」, I see the army go out but will not see it come back. It was wiped out at Xiao. (Zuozhuan, Duke Xi 32-33)",
-           zh: "他力劝秦穆公不要远袭郑国，出兵时哭着说「吾見師之出，而不見其入也」（今译：我看得见大军出去，却看不到它回来）。秦军果然在殽山全军覆没。（《左传·僖公三十二、三十三年》）" } },
+   hook: { en: "He warned Duke Mu against a long-distance raid, then wept as the army marched out: 「吾見師之出，而不見其入也」, I see the army go out but will not see it come back. At Xiao the army was crushed and its three generals captured. (Zuozhuan, Duke Xi 32-33)",
+           zh: "他力劝秦穆公不要远袭郑国，出兵时哭着说「吾見師之出，而不見其入也」（今译：我看得见大军出去，却看不到它回来）。秦军果然在殽大败，三位主将被俘。（《左传·僖公三十二、三十三年》）" } },
  { id: "yan", side: "m", pair: "LR", day: 7, img: "yan",
    fig: { en: "Yan Ying", zh: "晏婴" }, name: { en: "The Yan Ying type", zh: "晏婴型" },
    title: { en: "The No-Kneel, No-Run Type", zh: "不跪不跑不装型" },
@@ -170,8 +170,8 @@ types: [
    title: { en: "The Read-the-Comments Reformer", zh: "挨骂照干型" },
    desc: { en: "You turned your “only I know how” job security into a public doc and got roasted for it. Three years later, nobody can work without it.",
            zh: "你把“只有我会”的饭碗写成文档发给全公司，然后被全公司骂了。三年后，谁也离不开它。" },
-   hook: { en: "In 536 BC Zheng cast its penal laws on a bronze ding. To Shuxiang's scathing letter he replied 「吾以救世也」: I do it to rescue my own age. (Zuozhuan, Duke Zhao 6)",
-           zh: "前536年，郑国把刑法铸在鼎上。晋国叔向来信痛批，子产回信说「吾以救世也」（今译：我是为了挽救当下）。（《左传·昭公六年》）" } }
+   hook: { en: "In 536 BC Zheng cast its penal code for all to see. To Shuxiang's scathing letter Zichan replied 「吾以救世也」: I do it to save my own age. (Zuozhuan, Duke Zhao 6)",
+           zh: "前536年，郑国把刑书铸了出来，公之于众。晋国叔向来信痛批，子产回信说「吾以救世也」（今译：我是为了挽救当世）。（《左传·昭公六年》）" } }
 ],
 // Ziwei bonus: main star of the Life Palace (命宫) -> series figure. Star keywords are our own short glosses.
 stars: {
