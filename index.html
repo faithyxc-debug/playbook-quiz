@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Which Ancient Strategist Are You? · The Emperor's Playbook</title>
+<meta name="description" content="12 everyday questions, 12 types from Chinese statecraft, told through two cats. Free, no sign-up, nothing collected.">
+<meta property="og:title" content="Which ancient Chinese strategist are you?">
+<meta property="og:description" content="12 everyday questions. 12 types. Two cats. Free quiz from The Emperor's Playbook.">
+<meta property="og:image" content="img/og.jpg">
+<meta name="theme-color" content="#f6eddf">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand" data-i18n="brand">The Emperor's Playbook</div>
+  <button id="langBtn" class="lang" type="button" aria-label="Switch language">中文</button>
+</header>
+
+<main>
+  <!-- intro -->
+  <section id="intro" class="screen active">
+    <img class="hero" id="heroImg" alt="">
+    <p class="kicker" data-i18n="kicker">A 2-minute personality quiz</p>
+    <h1 data-i18n="h1">Which ancient strategist are you?</h1>
+    <p class="lede" data-i18n="lede">12 everyday choices. 12 types from 2,500-year-old Chinese statecraft, each a real figure from our cat comic. Are you a Manman (the one in charge) or a Wuyue (the one who makes it happen)?</p>
+    <button id="startBtn" class="btn primary" type="button" data-i18n="start">Start the quiz</button>
+    <p class="fine" data-i18n="privacy">No sign-up. No data collected. Everything stays in your browser.</p>
+    <div id="sharedBox" class="shared hidden"></div>
+  </section>
+
+  <!-- question -->
+  <section id="quiz" class="screen">
+    <div class="progress"><div id="bar"></div></div>
+    <div class="qmeta"><button id="backBtn" class="link" type="button" data-i18n="back">‹ Back</button><span id="qnum"></span></div>
+    <h2 id="qtext"></h2>
+    <div id="opts" class="opts"></div>
+  </section>
+
+  <!-- result -->
+  <section id="result" class="screen">
+    <p class="kicker" id="rSide"></p>
+    <p class="youare" data-i18n="youare">You are…</p>
+    <h1 id="rName"></h1>
+    <p class="rtitle" id="rTitle"></p>
+    <img id="rImg" class="rimg" alt="">
+    <p id="rDesc" class="rdesc"></p>
+    <div id="rBars" class="bars"></div>
+    <div class="hook"><span class="hooklabel" data-i18n="hooklabel">Real history</span><p id="rHook"></p></div>
+    <p class="readday" id="rDay"></p>
+    <div class="actions">
+      <button id="saveBtn" class="btn primary" type="button" data-i18n="save">Save my card</button>
+      <button id="shareBtn" class="btn" type="button" data-i18n="share">Share / copy link</button>
+      <button id="retryBtn" class="btn ghost" type="button" data-i18n="retry">Retake</button>
+    </div>
+    <p id="toast" class="toast" role="status" aria-live="polite"></p>
+    <img id="cardPreview" class="cardpreview hidden" alt="">
+
+    <details id="egg" class="egg">
+      <summary data-i18n="eggSummary">🎲 Bonus: find your fate-palace twin</summary>
+      <p class="fine strong" data-i18n="eggNote">Just for fun, not fortune-telling.</p>
+      <p class="fine" data-i18n="eggExplain">Enter a birth date and hour. We read only the main star of the Life Palace (命宫) in a Zi Wei Dou Shu chart and match it to a figure from the series. Computed in your browser; nothing is sent or saved.</p>
+      <div class="eggform">
+        <label><span data-i18n="eggDate">Birth date</span><input type="date" id="zwDate" min="1900-01-01" max="2100-12-31"></label>
+        <label><span data-i18n="eggHour">Birth hour</span><select id="zwHour"></select></label>
+        <button id="zwBtn" class="btn small" type="button" data-i18n="eggGo">Find my twin</button>
+      </div>
+      <p id="zwOut" class="zwout"></p>
+    </details>
+    <section class="explore">
+      <h3 data-i18n="allTypes">All 12 types</h3>
+      <div id="allTypes" class="alltypes"></div>
+    </section>
+  </section>
+</main>
+
+<footer>
+  <p class="follow"><span data-i18n="follow">Follow the comic:</span>
+    <a href="https://x.com/faithzhukgr7" target="_blank" rel="noopener">X @faithzhukgr7</a> ·
+    <a href="https://www.instagram.com/faiitttthhh/" target="_blank" rel="noopener">Instagram @faiitttthhh</a> ·
+    <a href="https://www.threads.net/@faiitttthhh" target="_blank" rel="noopener">Threads @faiitttthhh</a></p>
+  <p class="fine" data-i18n="disclaimer">A free quiz for fun. Manman and Wuyue are the creator's two real cats; the panels are AI illustration. Types are playful, not psychology. History hooks are sourced; lines in 「」 are quoted from the classical texts named. The Zi Wei bonus is entertainment, not fortune-telling. No sign-in, no payment, no personal data collected.</p>
+  <p class="fine"><span data-i18n="credits">Zi Wei chart computed with</span> <a href="https://github.com/SylarLong/iztro" target="_blank" rel="noopener">iztro</a> (MIT).</p>
+</footer>
+
+<canvas id="card" width="1080" height="1350" hidden></canvas>
+<script src="images.js"></script>
+<script src="data.js"></script>
+<script src="logic.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
