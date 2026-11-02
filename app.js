@@ -3,75 +3,56 @@
 // Set this to the public URL once the quiz is hosted (e.g. "https://<name>.github.io/emperor-quiz/").
 var SITE_URL = "";
 var Q = window.QUIZ, IMG = window.CAT_IMG;
-var UI = {
-  en: { brand:"The Emperor's Playbook", kicker:"A 2-minute personality quiz", h1:"Which ancient strategist are you?",
-    lede:"12 everyday choices. 12 types from 2,500-year-old Chinese statecraft, each a real figure from our cat comic. Are you a Manman (the one in charge) or a Wuyue (the one who makes it happen)?",
-    start:"Start the quiz", privacy:"No sign-up. No data collected. Everything stays in your browser.", back:"‹ Back",
-    qnum:"Question {n} of {t}", youare:"You are…", hooklabel:"Real history", save:"Save my card", share:"Share / copy link", retry:"Retake",
-    readday:"Read the story: Day {d} of the series, “{title}”, on", eggSummary:"🎲 Bonus: find your fate-palace twin",
-    eggNote:"Just for fun, not fortune-telling.",
-    eggExplain:"Enter a birth date and hour. We read only the main star of the Life Palace (命宫) in a Zi Wei Dou Shu chart and match it to a figure from the series. Computed in your browser; nothing is sent or saved.",
-    eggDate:"Birth date", eggHour:"Birth hour", eggGo:"Find my twin", eggNeed:"Pick a date and an hour first.", eggLoading:"Reading the stars…",
-    eggFail:"Couldn't compute that date. Try another between 1900 and 2100.",
-    eggResult:"Life Palace main star: <b>{star}</b>. Your fate-palace twin: <b>{fig}</b> ({title}).",
-    eggBorrow:"Your Life Palace has no main star, so by custom we borrow the opposite palace's: <b>{star}</b>. Your fate-palace twin: <b>{fig}</b> ({title}).",
-    eggTail:"Just for fun, not fortune-telling.", allTypes:"All 12 types", follow:"Follow the comic:",
-    disclaimer:"A free quiz for fun. Manman and Wuyue are the creator's two real cats; the panels are AI illustration. Types are playful, not psychology. History hooks are sourced; lines in 「」 are quoted from the classical texts named. The Zi Wei bonus is entertainment, not fortune-telling. No sign-in, no payment, no personal data collected.",
-    credits:"Zi Wei chart computed with", saved:"Card saved. Post it and tag us!", savedPreview:"Long-press the card below to save it.",
-    copied:"Link copied!", copiedText:"Copied! Paste it anywhere.", shareText:"I got {name} ({title}) in The Emperor's Playbook quiz 🐾 Which ancient strategist are you?",
-    sharedHead:"A friend got:", sharedCta:"Take the quiz to find yours.", cardIam:"I'm", cardTake:"Take the quiz", cardTwin:"Fate-palace twin: {fig} (just for fun)",
-    sideShort:{ r:"Manman type", m:"Wuyue type" } },
-  zh: { brand:"帝王权术 · The Emperor's Playbook", kicker:"两分钟性格测试", h1:"你是哪一种古代谋略家？",
-    lede:"12 道日常选择题，12 种来自两千五百年前中国政治智慧的类型，每一种都是我们猫咪漫画里的真实人物。你是满满（掌权的那个），还是五月（把事办成的那个）？",
-    start:"开始测试", privacy:"无需注册，不收集任何数据，一切都只在你的浏览器里。", back:"‹ 上一题",
-    qnum:"第 {n} / {t} 题", youare:"你是……", hooklabel:"真实历史", save:"保存我的卡片", share:"分享 / 复制链接", retry:"再测一次",
-    readday:"读原故事：系列第 {d} 天《{title}》，在", eggSummary:"🎲 彩蛋：找找你的命宫双胞胎",
-    eggNote:"图个乐，不是算命。",
-    eggExplain:"输入出生日期和时辰。我们只看紫微斗数命盘里命宫的主星，把它对应到系列中的一位人物。计算全在你的浏览器里完成，不上传、不保存。",
-    eggDate:"出生日期（公历）", eggHour:"出生时辰", eggGo:"找我的双胞胎", eggNeed:"请先选日期和时辰。", eggLoading:"正在看星……",
-    eggFail:"这个日期算不出来，换一个 1900–2100 年之间的试试。",
-    eggResult:"命宫主星：<b>{star}</b>。你的命宫双胞胎：<b>{fig}</b>（{title}）。",
-    eggBorrow:"你的命宫没有主星，按惯例借对宫（迁移宫）的主星：<b>{star}</b>。你的命宫双胞胎：<b>{fig}</b>（{title}）。",
-    eggTail:"图个乐，不是算命。", allTypes:"全部 12 种类型", follow:"关注漫画：",
-    disclaimer:"免费测试，图个乐。满满和五月是作者家的两只真猫，画面为AI插画。类型是娱乐，不是心理学。历史钩子都有出处，「」内为所注典籍原文。紫微彩蛋只是娱乐，不是算命。无需登录、无需付费、不收集个人数据。",
-    credits:"紫微命盘计算使用", saved:"卡片已保存，发出来记得@我们！", savedPreview:"长按下面的卡片即可保存。",
-    copied:"链接已复制！", copiedText:"已复制，随处粘贴吧。", shareText:"我测出来是{name}（{title}）🐾 来测测你是哪一种古代谋略家？",
-    sharedHead:"你的朋友测出：", sharedCta:"来测测你是哪一型。", cardIam:"我是", cardTake:"来测测你是哪一型", cardTwin:"命宫双胞胎：{fig}（图个乐）",
-    sideShort:{ r:"满满型", m:"五月型" } }
-};
-var DAYS = {
-  1:{ en:"Duke Zhuang defeats his brother at Yan", zh:"郑庄公克段于鄢" },
-  2:{ en:"Duke Huan and Guan Zhong", zh:"齐桓公与管仲" },
-  3:{ en:"Chong'er: 19 years in exile", zh:"晋文公重耳" },
-  4:{ en:"Duke Mu and Baili Xi", zh:"秦穆公与百里奚" },
-  5:{ en:"King Zhuang asks about the cauldrons", zh:"楚庄王问鼎" },
-  7:{ en:"Yan Ying and the killing of Duke Zhuang of Qi", zh:"晏婴与崔杼弑君" },
-  8:{ en:"Zichan casts the law in bronze", zh:"子产铸刑书" }
-};
-var lang = "en", idx = 0, answers = [], result = null, twin = null;
-try { var sv = localStorage.getItem("ep_lang"); if (sv) lang = sv; } catch(e){}
-var qp = /[?&]lang=(zh|en)/.exec(location.search); if (qp) lang = qp[1];
+var I = window.I18N, UI = I.UI, DAYS = I.DAYS, FB = I.fallback;
+// Only languages that have a UI block are offered.
+var LANGS = I.LANGS.filter(function(x){ return UI[x.code]; });
+// Merge generated translation packs (i18n.js CONTENT.<code>) into the quiz data, so every lookup stays pick(o, lang).
+(function mergeContent(C){
+  if (!C) return;
+  Object.keys(C).forEach(function(c){
+    var P = C[c];
+    Object.keys(P.days || {}).forEach(function(d){ if (DAYS[d]) DAYS[d][c] = P.days[d]; });
+    Object.keys(P.traits || {}).forEach(function(k){ if (Q.traits[k]) Q.traits[k][c] = P.traits[k]; });
+    Object.keys(P.sides || {}).forEach(function(k){ if (Q.sides[k]) Q.sides[k][c] = P.sides[k]; });
+    (P.q || []).forEach(function(x, i){ var q = Q.questions[i]; if (!q) return; q[c] = x.q; if (q.lead) q.lead[c] = x.lead; x.a.forEach(function(o, j){ if (q.a[j]) q.a[j][c] = o; }); });
+    Q.types.forEach(function(ty){ var y = P.types && P.types[ty.id]; if (!y) return; ["fig","name","title","desc","hook"].forEach(function(f){ if (y[f] != null) ty[f][c] = y[f]; }); });
+    Object.keys(P.stars || {}).forEach(function(k){ if (Q.stars[k]) Q.stars[k][c] = P.stars[k]; });
+    (P.hours || []).forEach(function(h, i){ if (Q.hours[i]) Q.hours[i][c] = h; });
+  });
+})(I.CONTENT);
+function langCfg(c){ return LANGS.filter(function(x){ return x.code === (c || lang); })[0] || LANGS[0]; }
+function isLang(c){ return LANGS.some(function(x){ return x.code === c; }); }
+var lang = FB, idx = 0, answers = [], result = null, twin = null;
+try { var sv = localStorage.getItem("ep_lang"); if (sv && isLang(sv)) lang = sv; } catch(e){}
+var qp = /[?&]lang=([a-z]{2})/.exec(location.search); if (qp && isLang(qp[1])) lang = qp[1];
+// First visit (nothing saved, no ?lang=): follow the browser language if we have it.
+else if (!sv) { try { var nl = (navigator.languages && navigator.languages[0]) || navigator.language || ""; nl = nl.slice(0,2).toLowerCase(); if (isLang(nl)) lang = nl; } catch(e){} }
 
 function $(id){ return document.getElementById(id); }
-function t(k, vars){ var s = UI[lang][k]; if (vars) for (var v in vars) s = s.split("{"+v+"}").join(vars[v]); return s; }
-function L(o){ return o[lang]; }
-function other(o){ return o[lang === "en" ? "zh" : "en"]; }
+function t(k, vars, lg){ var u = UI[lg || lang], s = (u && u[k] != null) ? u[k] : UI[FB][k]; if (vars) for (var v in vars) s = s.split("{"+v+"}").join(vars[v]); return s; }
+function pick(o, c){ return o[c] != null ? o[c] : o[FB]; }
+function L(o){ return pick(o, lang); }
+function altCode(){ return langCfg().alt; }
+function other(o){ return pick(o, altCode()); }
 function typeById(id){ return Q.types.filter(function(x){ return x.id === id; })[0]; }
 function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
 function show(id){ ["intro","quiz","result"].forEach(function(s){ $(s).classList.toggle("active", s === id); }); window.scrollTo(0,0); }
 
 function applyLang(){
-  document.documentElement.lang = lang === "en" ? "en" : "zh-CN";
-  $("langBtn").textContent = lang === "en" ? "中文" : "EN";
-  document.querySelectorAll("[data-i18n]").forEach(function(el){ var k = el.getAttribute("data-i18n"); if (UI[lang][k]) el.textContent = UI[lang][k]; });
-  document.title = lang === "en" ? "Which Ancient Strategist Are You? · The Emperor's Playbook" : "你是哪一种古代谋略家？· 帝王权术";
+  document.documentElement.lang = langCfg().html;
+  $("heroImg").alt = t("heroAlt");
+  $("langSel").value = lang; $("langSel").setAttribute("aria-label", t("langLabel"));
+  document.querySelectorAll("[data-i18n]").forEach(function(el){ el.textContent = t(el.getAttribute("data-i18n")); });
+  document.title = t("docTitle");
   var hs = $("zwHour"), keep = hs.value; hs.innerHTML = '<option value="">—</option>' + Q.hours.map(function(h,i){ return '<option value="'+i+'">'+esc(L(h))+'</option>'; }).join(""); hs.value = keep;
   if ($("quiz").classList.contains("active")) renderQ();
   if (result) renderResult();
   $("cardPreview").classList.add("hidden");
   renderShared();
 }
-$("langBtn").onclick = function(){ lang = lang === "en" ? "zh" : "en"; try { localStorage.setItem("ep_lang", lang); } catch(e){} applyLang(); };
+function setLang(c){ if (!isLang(c)) return; lang = c; try { localStorage.setItem("ep_lang", lang); } catch(e){} applyLang(); }
+$("langSel").innerHTML = LANGS.map(function(x){ return '<option value="' + x.code + '">' + esc(x.label) + '</option>'; }).join("");
+$("langSel").onchange = function(){ setLang(this.value); };
 
 // ---------- quiz ----------
 function renderQ(){
@@ -80,6 +61,7 @@ function renderQ(){
   $("qnum").textContent = t("qnum", { n: idx+1, t: n });
   $("backBtn").style.visibility = idx ? "visible" : "hidden";
   $("qtext").textContent = L(q);
+  $("qlead").textContent = q.lead ? L(q.lead) : ""; $("qlead").style.display = q.lead ? "" : "none";
   $("opts").innerHTML = "";
   q.a.forEach(function(o, i){
     var b = document.createElement("button"); b.type = "button"; b.className = "opt" + (answers[idx] === i ? " picked" : "");
@@ -114,30 +96,43 @@ function renderResult(){
   }).join("");
   $("rHook").textContent = L(ty.hook);
   $("rDay").innerHTML = esc(t("readday", { d: ty.day, title: L(DAYS[ty.day]) })) + ' <a href="https://x.com/faithzhukgr7" target="_blank" rel="noopener">X @faithzhukgr7</a> / <a href="https://www.instagram.com/faiitttthhh/" target="_blank" rel="noopener">IG @faiitttthhh</a>';
-  $("allTypes").innerHTML = Q.types.map(function(x){
-    return '<div class="tchip' + (x.id === ty.id ? ' me' : '') + '"><b>' + esc(L(x.name)) + '</b><small>' + esc(L(x.title)) + ' · ' + esc(UI[lang].sideShort[x.side]) + '</small></div>';
-  }).join("");
   if (twin) renderTwin();
 }
 
 // ---------- share card ----------
-function wrapTokens(s){ return s.match(/[\u2E80-\u9FFF\uF900-\uFAFF\uFF00-\uFFEF\u3000-\u303F「」]|[^\s\u2E80-\u9FFF\uF900-\uFAFF\uFF00-\uFFEF\u3000-\u303F「」]+|\s+/g) || []; }
+var SENT = { latin: /[^.!?]+[.!?]+(\s|$)/g, cjk: /[^。！？.!?]+[。！？.!?]+/g, space: /[^\s]+(\s+|$)/g };
+function wrapTokens(s){
+  var seg = langCfg().segment;
+  if (seg === "intl" && window.Intl && Intl.Segmenter) {
+    try { return Array.from(new Intl.Segmenter(langCfg().html, { granularity: "word" }).segment(s), function(x){ return x.segment; }); } catch(e){}
+  }
+  return wrapTokensBasic(s);
+}
+function wrapTokensBasic(s){ return s.match(/[\u2E80-\u9FFF\uF900-\uFAFF\uFF00-\uFFEF\u3000-\u303F「」]|[^\s\u2E80-\u9FFF\uF900-\uFAFF\uFF00-\uFFEF\u3000-\u303F「」]+|\s+/g) || []; }
+var NOSTART = /^[。、，．！？：；」』）】〉》”’…ー・,.!?:;)\]»%]/, NOEND = /[「『（【〈《“‘(«¿¡]+$/;
 function wrap(ctx, text, maxW){
   var toks = wrapTokens(text), lines = [], cur = "";
   toks.forEach(function(tk){
     var test = cur + tk;
-    if (ctx.measureText(test).width > maxW && cur.trim()) { lines.push(cur.trim()); cur = /^\s+$/.test(tk) ? "" : tk; }
+    if (ctx.measureText(test).width > maxW && cur.trim()) {
+      // kinsoku: closing punctuation never starts a line (hang it), opening brackets never end one (carry them over)
+      if (NOSTART.test(tk)) { cur = test; return; }
+      var carry = ""; var m = NOEND.exec(cur); if (m && m.index > 0) { carry = m[0]; cur = cur.slice(0, m.index); }
+      lines.push(cur.trim()); cur = /^\s+$/.test(tk) ? carry : carry + tk; }
     else cur = test;
   });
   if (cur.trim()) lines.push(cur.trim());
   return lines;
 }
-var FONT = '"PingFang SC","Hiragino Sans GB","Noto Sans CJK SC","Microsoft YaHei",-apple-system,"Segoe UI",Roboto,sans-serif';
+var FONT_BASE = '"PingFang SC","Hiragino Sans GB","Noto Sans CJK SC","Microsoft YaHei","Hiragino Kaku Gothic ProN","Apple SD Gothic Neo","Noto Sans CJK KR","Noto Sans Thai","Thonburi",-apple-system,"Segoe UI",Roboto,sans-serif';
+var FONT = FONT_BASE;
+function setCardFont(){ var f = langCfg().font; FONT = f ? f + "," + FONT_BASE : FONT_BASE; }
 function fitFont(ctx, text, weight, start, min, maxW){ var s = start; do { ctx.font = weight + " " + s + "px " + FONT; if (ctx.measureText(text).width <= maxW) break; s -= 2; } while (s > min); return s; }
 function rr(ctx, x, y, w, h, r){ ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
 function loadImg(src){ return new Promise(function(res, rej){ var im = new Image(); im.onload = function(){ res(im); }; im.onerror = rej; im.src = src; }); }
 
 function drawCard(){
+  setCardFont();
   var ty = result.type, c = $("card"), ctx = c.getContext("2d"), W = 1080, H = 1350;
   return loadImg(IMG[ty.img]).then(function(im){
     ctx.fillStyle = "#f6eddf"; ctx.fillRect(0,0,W,H);
@@ -155,27 +150,32 @@ function drawCard(){
     if (sh > im.height) { sh = im.height; sw = sh*ar; sx = (im.width - sw)/2; sy = 0; }
     ctx.save(); rr(ctx, ix, iy, iw, ih, 26); ctx.clip(); ctx.drawImage(im, sx, sy, sw, sh, ix, iy, iw, ih); ctx.restore();
     // side pill
-    var pill = UI[lang].sideShort[ty.side] + " · " + UI[lang === "en" ? "zh" : "en"].sideShort[ty.side];
+    var pill = t("sideShort")[ty.side] + " · " + t("sideShort", null, altCode())[ty.side];
     ctx.font = "700 28px " + FONT; var pw = ctx.measureText(pill).width + 40;
     ctx.fillStyle = "rgba(168,56,42,.92)"; rr(ctx, ix+20, iy+ih-66, pw, 48, 24); ctx.fill();
     ctx.fillStyle = "#fff"; ctx.textAlign = "left"; ctx.fillText(pill, ix+40, iy+ih-32);
     ctx.font = "500 20px " + FONT; ctx.fillStyle = "rgba(255,255,255,.95)"; ctx.textAlign = "right";
-    ctx.fillText("AI illustration · AI插画", ix+iw-18, iy+ih-18);
+    ctx.fillText(t("aiIll") + " · " + t("aiIll", null, altCode()), ix+iw-18, iy+ih-18);
     // bars
     var by = 856; ctx.textAlign = "left";
+    var traitFs = 30;
     ["S","L","R","P"].forEach(function(k, i){
       var tr = Q.traits[k], y = by + i*58, v = result.pct[k];
-      ctx.fillStyle = "#2b2320"; ctx.font = "700 30px " + FONT; ctx.fillText(L(tr), 100, y+10);
+      ctx.fillStyle = "#2b2320"; traitFs = Math.min(traitFs, fitFont(ctx, L(tr), "700", 30, 22, 370-100-16)); ctx.fillText(L(tr), 100, y+10);
       ctx.fillStyle = "#e9dcc9"; rr(ctx, 370, y-12, 520, 26, 13); ctx.fill();
       ctx.fillStyle = tr.color; rr(ctx, 370, y-12, Math.max(26, 520*v/100), 26, 13); ctx.fill();
       ctx.fillStyle = "#2b2320"; ctx.textAlign = "right"; ctx.fillText(v + "%", 985, y+10); ctx.textAlign = "left";
     });
     // one-line description (first sentence)
-    var d = L(ty.desc), sents = (lang === "en" ? d.match(/[^.!?]+[.!?]+(\s|$)/g) : d.match(/[^。！？]+[。！？]/g)) || [d], first = "", lim = lang === "en" ? 110 : 44;
-    var stop = false; sents.forEach(function(x){ if (stop) return; if (!first || (first + x).length <= lim) first = first ? first + x : x; else stop = true; });
+    var d = L(ty.desc), cfg = langCfg(), sents = d.match(SENT[cfg.sentence] || SENT.latin) || [d], first = "", lim = cfg.cardChars;
+    // Add whole sentences while they still fit the card's line budget (3 lines, 2 when the Zi Wei twin line is shown).
+    ctx.font = "500 31px " + FONT; var budget = twin ? 2 : 3;
+    var stop = false; sents.forEach(function(x){ if (stop) return; if (!first || ((first + x).length <= lim * 1.6 && wrap(ctx, (first + x).trim(), W-200).length <= budget)) first = first ? first + x : x; else stop = true; });
     first = first.trim();
     ctx.font = "500 31px " + FONT; ctx.fillStyle = "#4a3f38"; ctx.textAlign = "center";
-    var lines = wrap(ctx, first, W-200).slice(0, twin ? 2 : 3);
+    var allLines = wrap(ctx, first, W-200), lines = allLines.slice(0, twin ? 2 : 3);
+    window.__cardStats = { traitFs: traitFs, descLines: allLines.length, maxLines: twin ? 2 : 3, nameFs: fs, subFs: fs2, subW: (ctx.font = "700 " + fs2 + "px " + FONT, ctx.measureText(sub).width), nameW: (ctx.font = "800 " + fs + "px " + FONT, ctx.measureText(name).width), maxW: W-160 };
+    ctx.font = "500 31px " + FONT;
     lines.forEach(function(l, i){ ctx.fillText(l, W/2, 1118 + i*40); });
     var fy = 1118 + lines.length*40;
     if (twin) { ctx.font = "500 24px " + FONT; ctx.fillStyle = "#7a6a5f"; ctx.fillText(t("cardTwin", { fig: L(typeById(twin.type).fig) }), W/2, fy + 6); }
@@ -246,7 +246,7 @@ $("zwBtn").onclick = function(){
 };
 function renderTwin(){
   var ty = typeById(twin.type), st = Q.stars[twin.star];
-  var starTxt = twin.stars.length > 1 ? twin.stars.join(lang === "en" ? " + " : "、") + (lang === "en" ? " (leading: " : "（以") + L(st) + (lang === "en" ? ")" : "为主）") : L(st);
+  var starTxt = twin.stars.length > 1 ? twin.stars.join(t("starJoin")) + t("starLead", { star: L(st) }) : L(st);
   $("zwOut").innerHTML = t(twin.borrowed ? "eggBorrow" : "eggResult", { star: esc(starTxt), fig: esc(L(ty.fig)), title: esc(L(ty.title)) }) + ' <span class="fine strong">' + esc(t("eggTail")) + '</span>';
 }
 
@@ -259,8 +259,8 @@ function renderShared(){
   box.innerHTML = '<p class="fine">' + esc(t("sharedHead")) + '</p><b>' + esc(L(sh.type.name)) + '</b> · ' + esc(L(sh.type.title)) + '<p class="fine">' + esc(t("sharedCta")) + '</p>';
 }
 
-$("heroImg").src = IMG.duo; $("heroImg").alt = "Manman and Wuyue";
+$("heroImg").src = IMG.duo;
 applyLang();
 // test hook for automated checks
-window.__quiz = { answer: function(arr){ answers = arr.slice(); finish(); }, get result(){ return result; }, drawCard: drawCard, get twin(){ return twin; } };
+window.__quiz = { setLang: setLang, langs: function(){ return LANGS.map(function(x){ return x.code; }); }, answer: function(arr){ answers = arr.slice(); finish(); }, get result(){ return result; }, drawCard: drawCard, get twin(){ return twin; } };
 })();
